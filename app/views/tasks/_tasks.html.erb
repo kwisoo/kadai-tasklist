@@ -1,0 +1,25 @@
+<ul class="media-list">
+  <% tasks.each do |task| %>
+    <% user = task.user %>
+    <li class="media">
+      <div class="media-left">
+        <img class="media-object img-rounded" src="<%= gravatar_url(task.user, options = { size: 50 }) %>" alt="">
+      </div>
+      <div class="media-body">
+        <div>
+          <%= link_to user.name, user_path(user) %> <span class="text-muted">posted at <%= task.created_at %></span>
+        </div>
+        <div>
+          <p>task: <%= task.content %></p>
+          <p> status: <%= task.status %></p>
+        <div>
+          <% if current_user == task.user %>
+            <%= link_to "Edit", edit_task_path(task), class: "btn btn-default btn-xs" %>
+            <%= link_to "Delete", task, method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-danger btn-xs' %>
+          <% end %>
+        </div>
+      </div>
+    </li>
+  <% end %>
+  <%= paginate tasks %>
+</ul>
